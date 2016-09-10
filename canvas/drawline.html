@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style type="text/css" media="screen">
+        #canvas{border: 1px solid #cecece;display: block;}
+        #btn{display:inline-block;padding: 10px;border: 1px solid #fe5e5e;width:50px;cursor: pointer;}
+    </style>
+</head>
+<body>
+    <div class="canvas_demo">
+        <canvas id="canvas" width="400" height="400"></canvas>
+    </div>
+    <!-- <script type="text/javascript" src="../weishop/scripts/jquery-1.11.3.min.js"></script> -->
+    <script type="text/javascript">
+        window.onload=function () {
+            canvas5();
+        }
+        var el=document.getElementById("canvas");
+        var ctx=el.getContext("2d");
+        var isDrawing;
+        var lastPoint;
+        var points=[];
+        var btn=document.getElementById("btn");
+        ctx.lineWidth = 10;
+        ctx.lineJoin = ctx.lineCap = 'round';
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = 'rgb(0, 0, 0)';
+        // normal
+        function canvas1(){
+            el.onmousedown=function(e){
+                isDrawing=true;
+                ctx.moveTo(e.clientX,e.clientY);
+            };
+            el.onmousemove=function(e){
+                if(isDrawing){
+                    ctx.lineTo(e.clientX,e.clientY);
+                    ctx.stroke();       
+                }
+            };
+            el.onmouseup=function(e){
+                isDrawing=false;
+            };
+        }
+        // Point-based with shadow
+        function canvas2(){
+            el.onmousedown=function(e){
+                isDrawing=true;
+                points.push({x:e.clientX,y:e.clientY});
+            };
+            el.onmousemove=function(e){
+                if(isDrawing){
+                    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+                    points.push({x:e.clientX,y:e.clientY});
+                    ctx.beginPath();
+                    ctx.moveTo(points[0].x, points[0].y);
+                    for (var i = 1; i < points.length; i++) {
+                        ctx.lineTo(points[i].x, points[i].y);
+                      }
+                    ctx.stroke();       
+                }
+            };
+            el.onmouseup=function(e){
+                isDrawing=false;
+                points.length=0;
+            };
+        }
+        // Edge smoothing with radial gradient
+        function canvas3(){
+            el.onmousedown=function(e){
+                isDrawing=true;
+                // ctx.moveTo(e.clientX,e.clientY);
+                lastPoint={x:e.clientX,y:e.clientY};
+            };
+            el.onmousemove=function(e){
+                if(isDrawing){
+                    var currentPoint = { x: e.clientX, y: e.clientY };
+                    var dist = distanceBetween(lastPoint, currentPoint);
+                    var angle = angleBetween(lastPoint, currentPoint);
+                    for (var i = 0; i < dist; i+=5) {
+                        x = lastPoint.x + (Math.sin(angle) * i);
+                        y = lastPoint.y + (Math.cos(angle) * i);
+                        var radgrad = ctx.createRadialGradient(x,y,10,x,y,20);
+                        radgrad.addColorStop(0, '#000');
+                        radgrad.addColorStop(0.5, 'rgba(0,0,0,0.5)');
+                        radgrad.addColorStop(1, 'rgba(0,0,0,0)');
+                        
+                        ctx.fillStyle = radgrad;
+                         ctx.fillRect(x-20, y-20, 40, 40);
+                      }
+                    lastPoint = currentPoint;
+                }
+            };
+            el.onmouseup=function(e){
+                isDrawing=false;
+            };
+        }
+        function distanceBetween(point1, point2) {
+          return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
+        }
+        function angleBetween(point1, point2) {
+          return Math.atan2( point2.x - point1.x, point2.y - point1.y );
+        }
+        function getRandomInt(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        // Brush, Fur, Pen
+        var img = new Image();
+        img.src = 'http://www.tricedesigns.com/wp-content/uploads/2012/01/brush2.png';
+        function canvas5(){
+            el.onmousedown=function(e){
+                isDrawing=true;
+                lastPoint = { x: e.clientX, y: e.clientY };
+            };
+            el.onmousemove=function(e){
+                if(isDrawing){
+                    var currentPoint = { x: e.clientX, y: e.clientY };
+                    var dist = distanceBetween(lastPoint, currentPoint);
+                    var angle = angleBetween(lastPoint, currentPoint);
+                    for (var i = 0; i < dist; i++) {
+                      x = lastPoint.x + (Math.sin(angle) * i) - 25;
+                      y = lastPoint.y + (Math.cos(angle) * i) - 25;
+                      // ctx.drawImage(img, x, y);   //demo1
+                       ctx.save();
+                       ctx.translate(x, y);
+                       ctx.scale(0.5, 0.5);
+                       ctx.rotate(Math.PI * 180 / getRandomInt(0, 180));
+                       ctx.drawImage(img, 0, 0);
+                       ctx.restore();
+                    }
+                  
+                    lastPoint = currentPoint;     
+                  }
+            };
+            el.onmouseup=function(e){
+                isDrawing=false;
+            };
+        }
+    </script>
+</body>
+</html>

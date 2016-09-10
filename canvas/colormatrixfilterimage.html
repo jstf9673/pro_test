@@ -1,0 +1,352 @@
+<!-- John Robinson - http://www.storminthecastle.com -->
+<html>
+<head>
+<title>Color Matrix Filter!</title>
+
+<style>
+td{width:32px;text-align:center;}
+td > input{width:64px;}
+</style>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script>
+
+var video;
+var canvas;
+var context;
+var currentColorMatrix;
+
+// Alias the vendor prefixed variants of getUserMedia so we can access them
+// via navigator.getUserMedia
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || 
+  navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+// Alias the vendor prefixed variants of the URL object so that we can access them
+// via window.URL
+window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+
+// Alias the vendor prefixed variants of requestAnimationFrame so that we can access
+// them via window.requestAnimationFrame fallback to setTimeout at 60hz if not supported.
+window.requestAnimationFrame = (function(){
+  return  window.requestAnimationFrame       || 
+          window.webkitRequestAnimationFrame || 
+          window.mozRequestAnimationFrame    || 
+          window.oRequestAnimationFrame      || 
+          window.msRequestAnimationFrame     || 
+          function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();
+
+function showStatus(s) {
+  document.querySelector("#status").innerHTML = s;
+}
+
+// This function will be called if a webcam is available and the user has
+// granted access for the web application to use it.
+function successCallback(stream) {
+  // Firefox has a special property that you can use to associate the stream with the
+  // video object.  Other browsers require you to use createObjectURL.
+  if (video.mozSrcObject !== undefined) {
+    video.mozSrcObject = stream;
+  } 
+  else {
+    video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+  }
+  video.play();	
+  
+  // Show the DOM elements that contain the rest of the UI
+  document.querySelector("#videodivs").style.display = "inline"; 
+  showStatus("You should be seeing video from your camera.");
+  
+  // capture the first frame of video and start the animation loop that
+  // continuously update the video to the screen
+  update();
+}
+
+// This function will be called if there is no webcam available or the user has
+// denied access for the web application to use it.
+function failureCallback() {
+  showStatus("No camera is available or you have denied access.");
+}
+
+// grayscale filter using an arithmetic average of the color 
+colorMatrixFilter = function (pixels, m) {
+  var d = pixels.data;
+  for (var i = 0; i < d.length; i += 4) {
+    var r = d[i];
+    var g = d[i + 1];
+    var b = d[i + 2]; 
+    var a = d[i + 3];
+    
+    d[i]   = r * m[0] + g * m[1] + b * m[2] + a * m[3] + m[4];
+    d[i+1] = r * m[5] + g * m[6] + b * m[7] + a * m[8] + m[9];
+    d[i+2] = r * m[10]+ g * m[11]+ b * m[12]+ a * m[13]+ m[14];
+    d[i+3] = r * m[15]+ g * m[16]+ b * m[17]+ a * m[18]+ m[19]; 
+  }
+  return pixels;
+};
+
+function processImage() {
+  if (canvas.width > 0 && canvas.height > 0) {
+      context.putImageData(colorMatrixFilter(context.getImageData(0, 0, 
+        canvas.width, canvas.height), currentColorMatrix), 0, 0);
+  }
+}
+
+function processVideoFrame() {
+  // We have to check for the video dimensions here.
+  // Dimensions will be zero until they can be determined from
+  // the stream.
+  if (context && video.videoWidth > 0 && video.videoHeight > 0) {
+    // Resize the canvas to match the current video dimensions
+    if (canvas.width != video.videoWidth) 
+      canvas.width = video.videoWidth;
+    if (canvas.height != video.videoHeight) 
+      canvas.height = video.videoHeight;
+    
+    // Copy the current video frame by drawing it onto the 
+    // canvas's context
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    processImage(canvas);
+  }
+}
+
+var frameNumber = 0;
+var startTime = null;
+
+function update(){
+
+  frameNumber++;
+  if (startTime == null)
+    startTime = (new Date).getTime(); // in milliseconds  
+  // Every 60 frames calculate our actual framerate and display it
+  if (frameNumber >= 60) {
+      var currentTime = (new Date).getTime();            // in milliseconds
+      var deltaTime = (currentTime - startTime)/1000.0;  // in seconds
+
+      document.querySelector("#fps").innerHTML = (Math.floor(frameNumber/deltaTime) + " fps");
+      startTime = currentTime;
+      frameNumber = 0;
+  }		      
+
+  processVideoFrame();
+  requestAnimationFrame(update); 
+};
+
+function onLoad() {
+
+  loadColorMatrix(identityMatrix);
+  
+  // Get the DOM object that matches the first video tag on the page
+  video = document.querySelector('video');
+
+  canvas = document.querySelector("#canvas2d");
+  context = canvas.getContext("2d");
+
+  showStatus("Waiting for you to grant access to the camera...");
+  
+  // We can retrieve the video dimensions from the video object once we have
+  // registered for and received the loadeddata event
+  video.addEventListener('loadeddata', function(e) {
+    console.log('loadeddata Video dimensions: ' + video.videoWidth + ' x ' + video.videoHeight);
+    }, false);
+
+  video.addEventListener('playing', function(e) {
+    console.log('play Video dimensions: ' + video.videoWidth + ' x ' + video.videoHeight);
+    }, false);
+
+  if (navigator.getUserMedia) {
+    // Ask the user for access to the camera
+    navigator.getUserMedia({video: true}, successCallback, failureCallback);	   
+  } 
+  else {
+    showStatus('The navigator.getUserMedia() method not supported in this browser.');
+  }
+  $("td >input").change(function() {
+    setColorMatrix(getColorMatrixFromTable());
+  });
+}
+
+function takeSnapshot() {
+  var url = canvas.toDataURL();
+  console.log(url);
+  // Set the src of the image url to the data url
+  document.querySelector("#snapshot").src = url;
+  // Display the DOM elements that contain the snapshot
+  document.querySelector("#snapshotdiv").style.display="inline-block";
+}
+
+function setColorMatrix(m) {
+  currentColorMatrix = m;
+}
+
+var identityMatrix = 
+[
+1, 0, 0, 0, 0,
+0, 1, 0, 0, 0,
+0, 0, 1, 0, 0,
+0, 0, 0, 1, 0,
+];
+
+var grayscaleMatrix = 
+[
+0.33, 0.34, 0.33, 0, 0,
+0.33, 0.34, 0.33, 0, 0,
+0.33, 0.34, 0.33, 0, 0,
+   0,    0,    0, 1, 0,
+];
+
+var sepiaMatrix = 
+[
+0.393, 0.769, 0.189, 0, 0,
+0.349, 0.686, 0.168, 0, 0,
+0.272, 0.534, 0.131, 0, 0,
+    0,     0,     0, 1, 0,
+];
+
+var redMatrix = 
+[
+ 1.0,    0,    0, 0, 0,
+   0,    0,    0, 0, 0,
+   0,    0,    0, 0, 0,
+   0,    0,    0, 1, 0,
+];
+
+var greenMatrix = 
+[
+   0,    0,    0, 0, 0,
+ 1.0,    0,    0, 0, 0,
+   0,    0,    0, 0, 0,
+   0,    0,    0, 1, 0,
+];
+
+var blueMatrix = 
+[
+   0,    0,    0, 0, 0,
+   0,    0,    0, 0, 0,
+ 1.0,    0,    0, 0, 0,
+   0,    0,    0, 1, 0,
+];
+
+var yellowMatrix = 
+[
+ 1.0,    0,    0, 0, 0,
+ 1.0,    0,    0, 0, 0,
+   0,    0,    0, 0, 0,
+   0,    0,    0, 1, 0,
+];
+
+
+var brighterMatrix = 
+[
+1, 0, 0, 0, 30,
+0, 1, 0, 0, 30,
+0, 0, 1, 0, 30,
+0, 0, 0, 1, 0,
+];
+
+var darkerMatrix = 
+[
+1, 0, 0, 0, -30,
+0, 1, 0, 0, -30,
+0, 0, 1, 0, -30,
+0, 0, 0, 1, 0,
+];
+
+function getColorMatrixFromTable() {
+  var m = [];
+  for(var r = 0; r < 4; r++) {
+    for(var c = 0; c < 5; c++) {
+      var id = "#m" + r + c;
+      var v = parseFloat(document.querySelector(id).value);
+      if (isNaN(v)) v = 0.0;
+      m.push(v); 
+    }
+  }
+  return m;
+}
+
+function loadColorMatrix(m) {
+  for(var r = 0; r < 4; r++) {
+    for(var c = 0; c < 5; c++) {
+      var id = "#m" + r + c;
+      var v = parseFloat(m[r*5+c]);
+      if (isNaN(v)) v = 0.0;
+      document.querySelector(id).value = v;
+    }
+  }
+  setColorMatrix(getColorMatrixFromTable());   
+}
+
+</script>
+</head>
+
+<body onload="onLoad();">
+<h1 style="display:inline-block;">Color Matrix Filter!</h1>
+by <a href="http://www.storminthecastle.com">John Robinson</a>
+<br/>
+Status: <span id="status"></span>
+<br/>
+<div id="videodivs" style="display:none;">
+<div style="display:inline-block;vertical-align:top;">
+<br/>
+<b>Filtered Video:</b>
+<br/>
+<canvas id="canvas2d" width="640" height="480" style="border:1px solid black;">
+Your browser does not support the canvas tag.
+</canvas>
+<div style="display:inline-block;vertical-align:top;">
+<b>Color Matrix</b><br/>
+<table border="0">
+<tr>
+<td>&nbsp;</td>
+<td><i>cr</i></td><td><i>cb</i></td>
+<td><i>cg</i></td><td><i>ca</i></td><td>i</td>
+</tr>
+<tr>
+<td><b>R</b></td>
+<td><input id="m00"></td><td><input id="m01"></td>
+<td><input id="m02"></td><td><input id="m03"></td><td><input id="m04"></td>
+</tr>
+<tr>
+<td><b>G</b></td>
+<td><input id="m10"></td><td><input id="m11"></td>
+<td><input id="m12"></td><td><input id="m13"></td><td><input id="m14"></td>
+</tr>
+<tr>
+<td><b>B</b></td>
+<td><input id="m20"></td><td><input id="m21"></td>
+<td><input id="m22"></td><td><input id="m23"></td><td><input id="m24"></td>
+</tr>
+<tr>
+<td><b>A</b></td>
+<td><input id="m30"></td><td><input id="m31"></td>
+<td><input id="m32"></td><td><input id="m33"></td><td><input id="m34"></td>
+</tr>
+</table>
+<br/>
+<a href="javascript:loadColorMatrix(identityMatrix);">Identity</a><br/>
+<a href="javascript:loadColorMatrix(grayscaleMatrix);">Grayscale</a><br/>
+<a href="javascript:loadColorMatrix(sepiaMatrix);">Sepia</a><br/>
+<a href="javascript:loadColorMatrix(redMatrix);">Red</a><br/>
+<a href="javascript:loadColorMatrix(greenMatrix);">Green</a><br/>
+<a href="javascript:loadColorMatrix(blueMatrix);">Blue</a><br/>
+<a href="javascript:loadColorMatrix(yellowMatrix);">Yellow</a><br/>
+<a href="javascript:loadColorMatrix(brighterMatrix);">Brighter</a><br/>
+<a href="javascript:loadColorMatrix(darkerMatrix);">Darker</a><br/>
+</div>
+<br/>
+<button onclick="takeSnapshot();">Snapshot</button>
+<span id="fps"></span>
+</div>
+<div id="snapshotdiv" style="display:none;vertical-align:top;">
+<br/>
+<b>Snapshot:</b>
+<br/>
+<img id="snapshot">
+</div>
+</div>
+<video style="display:none;"></video>
+</body>
+</html>
