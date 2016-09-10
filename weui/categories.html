@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="-1">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon" href="../yo.png" />
+        <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+        <title></title>
+        <link rel="apple-touch-icon" href="images/share_img.png" />
+        <link rel="stylesheet" type="text/css" href="styles/font.css">
+        <link rel="stylesheet" type="text/css" href="styles/main.css">
+        <link rel="stylesheet" type="text/css" href="styles/weui.css">
+        <link rel="stylesheet" type="text/css" href="styles/categories.css">
+        <link rel="stylesheet" type="text/css" href="styles/skin.css">
+        <style type="text/css">
+            .header .p_right{right: 10px;}
+           .search_con .cat_search_icon{position: absolute;right:10px;color: #999;}
+            .header .p_left,.header .p_right{color: #b2b2b2;}
+            .cat_search{text-align: center;height:60px;line-height: 60px;width:100%;margin: 0;background-color: #F9F9F9;}
+            .cat_search .search_con{position: relative;margin-left: 0;}
+            .cat_search input{padding:10px;border:1px solid #d8d7d7;width:80%;border-radius: 5px;padding-right: 30px;background-color: #fff;}
+            .p_right .carts_num{position: absolute;right: -9px;top: 10px;background-color: red;text-align: center;width:18px;height:18px;border-radius: 100%;line-height: 18px;color: #fff;}
+            .content{overflow:hidden;padding:0;}
+            .goods_all{border-top: 1px solid #d8d7d7;border-left: 1px solid #d8d7d7;height:100%;}
+            .goods_all .goods:first-child{border-right: 1px solid #d8d7d7;}
+            .goods{background:#fff!important;height:100%;}
+            .goods_cat{z-index: 11;}
+            .classify{overflow-y:scroll;}
+            .classify li{text-align: center;font-size: 14px;border-bottom: 1px solid #b2b2b2;}
+            .classify >li{text-align: center;font-size: 16px;border-bottom: 1px solid #b2b2b2;}
+            .current{color:#f0f0f0!important;background:#fff;}
+            .fucked{display:block;}
+            .goods_con{overflow-y:scroll;}
+            .goods_l{text-align: center;}
+            .goods-r{padding: 10px 0 10px 10px;}
+            .goods-r h4{margin-bottom: 5px;overflow: hidden;}
+            .goods_list{border-bottom: 1px solid #d8d7d7;overflow:hidden;padding:8px 10px;font-family: 黑体 Regular;}
+            .goods_list img{background:#fff;min-height: 64px;}
+            .goods_info{position: relative;}
+            .goods_info .price,.goods_info .price a{color:#fe5e5e;}
+            .goods_info .buy{text-align: center;padding-left: 10px;position: absolute;right:10px;}
+            .goods_info .buy img{vertical-align: middle;width:16px;}
+            .content{position: absolute;top: 50px;overflow:hidden;width:100%;bottom:50px;max-width: 640px;min-width: 320px;margin:0 auto;}
+            .goods_all{width:100%;overflow:hidden;}
+            /*.goods_all{width:100%;overflow:hidden;}*/
+            .classify,.goods{overflow-y: scroll;}
+            .carts{color:#b2b2b2;position: fixed;bottom: 0;left: 0;width:100%;margin:0 auto;padding:19px 10px;padding-left: 45px;}
+            .carts .cars_icon{position: absolute;left:15px;top: 0;display:block;text-align: center;}
+            .carts .cars_icon .carts_icon{font-size: 30px;}
+            .carts .carts_num{width:16px;height:16px;line-height: 16px; border-radius: 100%;background:red;position: absolute;right: -5px;top: 0;font-size: 8px;}
+            .carts .btn{padding:10px;color:#fff;text-align: center;position: absolute;right: 0;top: 21px;background:#cecece;}
+            .buy .iconfont{color: #fe5e5e;}
+            .h60{height:60px;}
+            .tips{text-align: center;padding: 5px;display:none;}
+            .a_active{color: #fe5e5e;}
+        </style>
+    </head>
+    <body>
+         <div class="header">
+            <!-- <div class="p_right to_cart"><i class="iconfont">&#xe603;</i><div class="carts_num">0</div></div> -->
+            <h2>商品分类</h2>
+        </div>
+        <div class="content">
+            <div class="cat_search">
+            <span class="search_con"><i class="iconfont cat_search_icon" onclick="search()">&#xe623;</i><input type="text" placeholder="请输入商品名称" value=""></span>
+                <!-- <input type="text" placeholder="请输入要搜索的商品"> -->
+            </div>
+            <div class="goods_all">
+                <div class="goods col-4 good_cat">
+                    <ul class="classify accordion" id="accordion">
+                       <!--  <li class="current">
+                            <div class="link"><i class="iconfont iconfontunfold"></i>推荐分类<i class="iconfont .xiala"></i></div>
+                            <ul class="submenu">
+                                <li class="current"><a href="#">Javascript</a></li>
+                                <li><a href="#">jQuery</a></li>
+                                <li><a href="#">Frameworks javascript</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <div class="link"><i class="iconfont iconfontunfold"></i>123<i class="iconfont .xiala"></i></div>
+                            <ul class="submenu">
+                                <li class="current"><a href="#">Javascript</a></li>
+                                <li><a href="#">jQuery</a></li>
+                                <li><a href="#">Frameworks javascript</a></li>
+                            </ul>
+                        </li> -->
+                    </ul>
+                    <div class="h60"></div>
+                </div>
+                <div class="goods col-8">
+                    <div class="goods_con fucked">
+                        <!-- <div class="goods_list aligncenter">
+                            <div class="col-3 goods-l"><img class="img-responsive" src="images/cart2.png" alt="cart.html" /></div>
+                            <div class="col-9 goods-r">
+                                <h5>KLR-10LA型家用空气制水机</h5>
+                                <div class="goods_info">
+                                    <span class="price">8000.00</span>
+                                    <span class="buy">
+                                        <i class="iconfont">&#xe635;</i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="tips"></div>
+                    <div class="h60"></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+             <nav>
+                 <ul class="aligncenter">
+                     <li class="col-3">
+                         <a href="index_shop.html"><i class="iconfont">&#xe63b;</i>
+                         <p>首页</p></a>
+                     </li>
+                     <li class="col-3">
+                         <a class="active" href="categories.html"><i class="iconfont">&#xe63f;</i>
+                         <p>分类</p></a>
+                     </li>
+                     <li class="col-3">
+                         <a href="cart.html?cartType=0"><i class="iconfont">&#xe63c;</i>
+                         <p>购物车</p></a>
+                     </li>
+                     <li class="col-3">
+                         <a href="person_center.html"><i class="iconfont">&#xe63a;</i>
+                         <p>我的</p></a>
+                     </li>
+                 </ul>
+             </nav>
+         </div>
+        <script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="scripts/main.js"></script>
+        <script type="text/javascript" src="scripts/main1.js"></script>
+        <script type="text/javascript" src="scripts/weui.js"></script>
+        <script type="text/javascript" src="scripts/categories.js"></script>
+        <script type="text/javascript">
+            var storage=window.localStorage;
+            $(document).ready(function(){
+                weui.Loading.show();
+                if(window.localStorage.getItem('cate_flat')){
+                    // show_p();
+                    defalut_show();
+
+                }else{
+                    // alert("p");
+                    show_p();
+                }
+                setTimeout(weui.Loading.hide(),1500);
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+         <meta charset="UTF-8" />
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="-1">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="styles/font.css">
+        <link rel="stylesheet" href="styles/dropload.min.css">
+        <link rel="stylesheet" type="text/css" href="styles/main.css">
+        <link rel="stylesheet" type="text/css" href="styles/weui.css">
+        <link rel="stylesheet" type="text/css" href="styles/skin.css">
+        <style type="text/css">
+            .content{padding:0;margin-bottom: 0;}
+            .menu{width:100%;overflow:hidden;background-color: #fff;}
+            .menu li{display:block;width:16.6666%;text-align: center;float: left;padding:10px 0;font-size: 15px;}
+            .menu li img{max-height: 30px;}
+            .menu li:last-child{border-right: 0;margin-right: -5px;}
+            .menu li p{font-size: 12px;}
+            .current{border-bottom: 2px solid #fe5e5e;}
+            .order{overflow:hidden;}
+            .order_con{display:none;overflow:hidden;text-align: center;background-color: #fff;margin-bottom: 10px;}
+            .order_list{padding-left: 5px;border-bottom: 1px solid #b2b2b2;background: url('images/arrow.png') no-repeat;background-position: 98% 50%;padding-right: 15px;background-size: 12px 18px;overflow:hidden;line-height: 75px;}
+            .order_list .order_img{padding:5px;}
+            .order_shop{border-bottom: 1px solid #cecece;overflow:hidden;padding:10px;}
+            .cons_title{padding:10px;text-align: left;background-color: #f0f0f0;}
+            .cons_title .status{float: right;margin-right: 10px;color: red;}
+            .order_con .all_price{text-align: right;padding: 10px 10px 0 0;color: #999;font-size: 14px;}
+            .order_con .btns{text-align: right;padding:10px;}
+            .order_con .btns .btn{text-align: center;display:inline-block;padding:6px 9px;border: 1px solid #b2b2b2;margin:0px 15px 0px 5px;border-radius: 3px;
+                color:#b2b2b2 ;}
+            .order_con .btns .pay{background: #fe5e5e;color: #ffffff;border: 1px solid #fe5e5e;padding: 5px 25px;}
+            .order_img img{vertical-align: middle;}
+            .total_nums{text-align: right;font-size:.8em;margin-top:5px;}
+            .tips{text-align: center;display:none;}
+        </style>
+    </head>
+    <body>
+         <div class="header">
+            <div class="p_left" onclick="backTo()"><i class="iconfont">&#xe61f;</i></div>
+            <h2>我的订单</h2>
+        </div>
+        <div class="content">
+            <ul class="menu">
+                <li class="current"><a><img class="img-responsive" src="images/dingdan.png" alt=""><p>全部订单</p></a> </li>
+                <li><a><img class="img-responsive" src="images/fukuan.png" alt=""><p>待付款</p> </a></li>
+                <li><a><img class="img-responsive" src="images/fahuo.png" alt=""><p>待发货</p> </a></li>
+                <li><a><img class="img-responsive" src="images/shouhuo.png" alt=""><p>待收货</p> </a></li>
+                <li><a><img class="img-responsive" src="images/jiaoyi.png" alt=""><p>交易成功</p></a></li>
+                <li><a><img class="img-responsive" src="images/return_goods.png" alt=""><p>退货</p></a></li>
+            </ul>
+            <div class="all_orderlist">
+                <div class="order" id="order">
+                </div>
+            <div class="tips"></div>
+            </div>
+        </div>
+        <script type="text/javascript" src="scripts/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="scripts/weui.js"></script>
+        <script type="text/javascript" src="scripts/main.js"></script>
+        <script type="text/javascript" src="scripts/main1.js"></script>
+        <script type="text/javascript" src="scripts/dropload.min.js"></script>
+        <script type="text/javascript">
+             var storage = window.localStorage;
+            var page=1;
+             var shopId=storage.getItem('shopId');
+             var parentId=storage.getItem('parentId');
+             var userId=storage.getItem('userId');
+           //  var param='';
+           //  request("param");
+           // var isImport=request("isImport");
+            var isImport=0;
+            $('.content').dropload({
+              scrollArea : window,
+              autoLoad:false,
+              distance:50,
+              threshold:0,
+              loadDownFn : function(me){
+                console.log($(window).scrollTop()+','+$(window).height()+','+$(document).height());
+                // if($(window).scrollTop() + $(window).height() >= $(document).height()){
+                  page++;
+                  console.log(page);
+                  setTimeout(orders(storage.getItem("action"),page),1500);
+                  // orders(storage.getItem("action"),page);
+                  me.resetload();
+                // }
+              }
+            });
+       $(document).ready(function(){
+            weui.Loading.show();
+           if(!storage.getItem("action")){
+              storage.setItem("action",8401);
+              orders(8401,1);
+            }else{
+              orders(storage.getItem("action"),1);
+              var acs=storage.getItem("action");
+              switch(acs){
+                case '8401': break;
+                case '8405':   
+                      $(".menu li").removeClass('current');
+                      $(".menu").children('li').eq(1).addClass('current');
+                      break;
+                case '8406': 
+                      $(".menu li").removeClass('current');
+                      $(".menu").children('li').eq(2).addClass('current');
+                      break;
+                case '8407': 
+                      $(".menu li").removeClass('current');
+                      $(".menu").children('li').eq(3).addClass('current');
+                      break;
+                case '8408':
+                      $(".menu li").removeClass('current');
+                      $(".menu").children('li').eq(4).addClass('current');
+                      break;
+                case '8408':
+                      $(".menu li").removeClass('current');
+                      $(".menu").children('li').eq(5).addClass('current');
+                      break;
+                default:weui.alert('异常');
+              }
+            }
+        });
+       function backTo(){
+        storage.removeItem("action");
+        back();
+       }
+       $(function(){
+          var tabs =$(".menu li");
+          var tabs_con=$(".all_orderlist order");
+          tabs.click(function(e) {
+            page=1;
+            tabs.removeClass('current');
+            $(this).addClass('current');
+            var cats=$(this).find('p').text();  
+            var action;
+            console.log($(this).find('p').text());
+            switch(cats){
+              case '全部订单': action=8401;console.log(page);break;
+              case '待付款': action=8405;console.log(page);break;
+              case '待发货': action=8406;console.log(page);break;
+              case '待收货': action=8407;console.log(page);break;
+              case '交易成功': action=8408;console.log(page);break;
+              case '退货': action=8408;console.log(page);break;
+              default:weui.alert('异常');
+            }
+            $('.tips').hide();
+            storage.setItem("action",action);
+          $('#order').html('');
+            orders(action,page);
+          });
+       });
+       function orders(action,page){
+          weui.Loading.show();
+          $.ajax({
+               url:test_url+'action='+action,
+               type: 'get',
+               dataType: 'jsonp',
+               jsonp:'callback',
+               data: {'userId':userId,'page':page,'rows':8,'isImport':0,'parentId':parentId},
+               success:function(res){
+                if(res.code=='0000'){
+                var html='';
+                var aaa=data(res);
+                  // data(res);
+                  // if(page==1){
+                    // $('#order').html(aaa);
+                  // }else{
+                    $('#order').append(aaa);
+                  // }
+                }else{
+                    if(page==1){
+                      // $('#order').html(res.message);
+                      weui.alert(res.message);
+                    }else{
+                      $('.tips').show();
+                      $('.tips').html(res.message);
+                    }
+                }
+                    weui.Loading.hide();
+                },
+                error:function(err){
+                  weui.alert('请求失败');
+                    weui.Loading.hide();
+                }
+            });
+       }
+       function data(res){
+          var html='';
+          var fuck=[];
+          console.log(res.resultList.length);
+          for(var i=0;i<res.resultList.length;i++){
+            var total_num=0;
+            var orderNo=res.resultList[i].orderNo;
+            var priceTotal=res.resultList[i].priceTotal;
+            var order1=orderNo.substr(0,8)+"";
+            var order2=orderNo.substring(8)+"";
+            var orderState=res.resultList[i].orderState;
+            var status='';
+            fuck.push(orderState);
+            switch(orderState){
+              case 1:
+              status='等待买家付款';
+              break;
+              case 2:
+              status='等待卖家发货';
+              break;
+              case 3:
+              status='等待卖家发货';
+              break;
+              case 4:
+              status='卖家已发货';
+              break;
+              case 5:
+              status='交易成功';
+              break;
+              case 6:
+              status='';
+              break;
+              case 7:
+              status='退货申请中...';
+              break;
+              default:
+              weui.alert('未知错误');
+              break;
+          }
+          html+='<div class="order_con" style="display:block">'
+          +'<div class="cons_title">'+res.resultList[i].shopName+'<div class="status">'+status+'</div></div>'
+          +'<div class="order_list aligncenter" onclick="to_orderDetail('+order1+','+order2+')">'
+          if(res.resultList[i].param.length>3){
+              for(var j=0;j<3;j++){
+                html+='<div class="order_img col-4">'
+                +'<img class="img-responsive" src="'+res.resultList[i].param[j].goodsThumb+'" alt="">'
+                +'</div>';
+            }
+            html+='<div class="col-1" style="text-align: right">...</div>';
+        }else{
+          html+='<div class="col-9">'
+          for(var j=0;j<res.resultList[i].param.length;j++){
+            html+='<div class="order_img col-4">'
+            +'<img class="img-responsive" src="'+res.resultList[i].param[j].goodsThumb+'" alt="">'
+            +'</div>';
+        }
+        html+='</div>';
+    }
+        for(var j=0;j<res.resultList[i].param.length;j++){
+          total_num+=res.resultList[i].param[j].goodsNum;
+        }
+          var btns='';
+          if(orderState==1){
+            btns='<div class="btns">'
+            +'<span class="btn cancek" onclick="cancel_order('+order1+','+order2+')">取消订单</span>'
+            +'<span class="btn pay" onclick="to_pay('+order1+','+order2+','+priceTotal+')">付款</span>'
+            +'</div>';
+            }else if(orderState==4){
+                btns='<div class="btns">'
+                +'<span class="btn cancek" onclick="sb_return('+order1+','+order2+')">申请退货</span>'
+                +'<span class="btn pay" onclick="quren('+order1+','+order2+')">确认收货</span>'
+                +'</div>';
+            }else{
+                btns='<div class="btns">'
+                +'<span class="btn cancek" onclick="sb_return('+order1+','+order2+')">申请退货</span>'
+                +'</div>';
+            }
+            html+='<div class="col-2 total_nums">共'+total_num+'件</div>'
+            +'</div>'
+            +'<p class="all_price">合计:￥'+res.resultList[i].priceTotal.toFixed(2)+'</p>'
+            +btns
+            +'</div>';
+          }
+            // html+='<div class="tips"></div>';
+            console.log('fuck');
+            console.log(fuck);
+            return html;
+            // $('#m').append(html);
+
+       }
+
+       function to_pay(order1,order2,mon){
+          var orderNo;
+        console.log(order2.toString().length);
+        if(order2.toString().length<10){
+          orderNo=order1.toString()+'0'+order2.toString();
+        }else{
+          orderNo=order1.toString()+order2.toString();
+        }
+          window.location.href='pay_way.html?orderNo='+orderNo+'&totalMoney='+mon;
+        }
+
+       function to_orderDetail(order1,order2){
+        var orderNo;
+        console.log(order2.toString().length);
+        if(order2.toString().length<10){
+          orderNo=order1.toString()+'0'+order2.toString();
+        }else{
+          orderNo=order1.toString()+order2.toString();
+        }
+        window.location.href='order_detail.html?orderNo='+orderNo;
+       }
+
+       function quren(order1,order2){
+            var orderNo;
+            console.log(order2.toString().length);
+            if(order2.toString().length<10){
+              orderNo=order1.toString()+'0'+order2.toString();
+            }else{
+              orderNo=order1.toString()+order2.toString();
+            }
+              $.ajax({
+                    url: test_url+'action=8317',
+                    type: 'get',
+                    dataType: 'jsonp',
+                    jsonp:'callback',
+                    data: {'orderNo': orderNo,'orderState':5,'shopId':shopId,'type':1},
+                    success:function(res){
+                      if(res.code=='0000'){
+                        weui.alert("确认订单成功","提示",function(){
+                          // orders(storage.getItem("action"),1);
+                          setTimeout(window.location.reload(),1000);
+                        });
+                      }else{
+                        weui.alert('页面加载错误');
+                      }
+                    },
+                    error:function(err){weui.alert('请求失败');}
+                  });
+            }
+          function cancel_order(order1,order2){
+              var orderNo;
+            console.log(order2.toString().length);
+            if(order2.toString().length<10){
+              orderNo=order1.toString()+'0'+order2.toString();
+            }else{
+              orderNo=order1.toString()+order2.toString();
+            }
+              var action=storage.getItem("action");
+              weui.confirm('确定要取消订单吗？','提示',function(r){
+                if(r){
+                  $.ajax({
+                    url: test_url+'action=8412',
+                    type: 'get',
+                    dataType: 'jsonp',
+                    jsonp:'callback',
+                    data: {'orderNo': orderNo,'userId':storage.getItem('userId'),'shopId':shopId},
+                    success:function(res){
+                      if(res.code=='0000'){
+                        weui.alert(res.message,"提示",function(){
+                          // orders(action,1);
+                          setTimeout(window.location.reload(),1000);
+                        });
+                      }else{weui.alert(res.message);}
+                    },
+                    error:function(err){weui.alert('请求失败');}
+                  });
+                }
+              });
+            }
+            function sb_return(order1,order2){
+              var orderNo;
+            console.log(order2.toString().length);
+            if(order2.toString().length<10){
+              orderNo=order1.toString()+'0'+order2.toString();
+            }else{
+              orderNo=order1.toString()+order2.toString();
+            }
+            console.log(orderNo);
+              window.location.href="sales_return.html?orderNo="+orderNo;
+            }
+        </script>
+    </body>
+</html>

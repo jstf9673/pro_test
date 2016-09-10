@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS3线性渐变——从顶部到底部渐变</title>
+	<style type="text/css" media="screen">
+		div {
+			width: 400px;
+			height: 150px;
+			border: 1px solid #666;
+			line-height: 150px;
+			text-align: center;
+			font-weight: 900;
+			font-size: 30px;
+			color: #fff;
+			margin: 10px auto;
+		}
+		.toTop {
+			background-image:-webkit-linear-gradient(to top, orange, green);
+			background-image:linear-gradient(to top,orange,green);
+		}
+		.toTop-deg{
+			background-image:-webkit-linear-gradient(0deg, orange, green);
+			background-image:linear-gradient(0deg,orange,green);
+		}
+		.toTop-deg2{
+			background-image:-webkit-linear-gradient(360deg, orange, green);
+			background-image:linear-gradient(360deg,orange,green);
+		}
+		.toTop-deg3 {
+			background-image:-webkit-linear-gradient(-360deg, orange, green);
+			background-image:linear-gradient(-360deg,orange,green);
+		}
+		.panorama {
+		  width: 300px;
+		  height: 300px;
+		  background-image: url(http://7vilbi.com1.z0.glb.clouddn.com/blog/6608185829213862083.jpg);
+		  background-size: auto 100%;    //图片高度压缩至内容高度，宽度任意
+		  cursor: pointer;
+		  animation: panorama 10s linear infinite alternate;   
+		  /*周而复始、往复交替、线性并且时间周期是10s*/
+		  animation-play-state: paused;              //暂停
+		}
+
+		.panorama:hover,
+		.panorama:focus {
+		  animation-play-state: running;             //运行
+		}
+
+		@keyframes panorama {
+		  to {
+		    background-position: 100% 0;             
+		  }
+		}
+	</style>
+</head>
+<body>
+	<div class="toTop">使用关键词：to top</div>
+	<div class="toTop-deg">使用角度：0 deg</div>
+	<div class="toTop-deg2">使用角度：360deg</div>
+	<div class="toTop-deg3">使用角度：-360deg</div>
+	<div class="panorama"></div>
+</body>
+</html>

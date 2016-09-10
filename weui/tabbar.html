@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        <title>weui tabbar</title>
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Web Starter Kit">
+        <meta name="msapplication-TileColor" content="#3372DF">
+        <link rel="stylesheet" type="text/css" href="../css/weui.css">
+        <style type="text/css" media="screen">
+            html, body{
+                height: 100%;
+            }
+
+            body{
+                border-color: #efeff4;
+            }
+
+            .weui_tab_bd_item{
+                display: none;
+                h3{
+                    padding: 45% 0 0;
+                    text-align: center;
+                    color: #888;
+                    font-weight: normal;
+                }
+            }
+            .cover{
+              display: block;
+              width: 42px;
+              height: 42px;
+              margin-right: 15px;
+            }
+            .title{
+              font-weight: 400;
+              margin-right: 15px;
+              font-size: 16px;
+            }
+            .summary{
+              font-size: 14px;
+              margin-right: 15px;
+              color: #888888;
+              display: -webkit-box;
+              max-width: 100%;
+              -webkit-line-clamp: 1;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="weui_tab">
+ <!--            <div class="weui_navbar">
+                <div class="weui_navbar_item weui_navbar_item_active">
+                    选项一
+                </div>
+                <div class="weui_navbar_item">
+                    选项二
+                </div>
+                <div class="weui_navbar_item">
+                    选项三
+                </div>
+            </div> -->
+            <div class="weui_tab_bd">
+                <div class="weui_tab_bd_item">
+                    <h3>微信</h3>
+                    <div class="weui_cells_title">意见反馈</div>
+                    <div class="weui_cells weui_cells_form">
+                        <div class="weui_cell">
+                            <div class="weui_cell_bd weui_cell_primary">
+                                <textarea class="weui_textarea" id="textarea" placeholder="请输入意见反馈" rows="3"></textarea>
+                                <div class="weui_textarea_counter"><span id="count">0</span>/200</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui_tab_bd_item">
+                    <h3>通讯录</h3>
+                </div>
+                <div class="weui_tab_bd_item">
+                    <h3>发现</h3>
+                    <div class="container">
+                        <div class="weui_cells_title">图文列表</div>
+                        <div class="weui_cells weui_cells_access">
+                          <div class="weui_cell">
+                            <div class="weui_cell_hd">
+                              <img src="http://mmrb.github.io/avatar/jf.jpg" alt="" class="cover">
+                            </div>
+                            <div class="weui_cell_bd weui_cell_primary">
+                              <h3 class="title">WeUI 发布——微信官方UI库</h3>
+                              <p class="summary">团队里的几个小伙子把微信里面web app的UI，按照设计规范给梳理了一遍，并将之开源了出来。</p>
+                            </div>
+                            <div class="weui_cell_ft">
+                            </div>
+                          </div>
+                          <div class="weui_cell">
+                            <div class="weui_cell_hd">
+                              <img src="http://mmrb.github.io/avatar/bear.jpg" alt="" class="cover">
+                            </div>
+                            <div class="weui_cell_bd weui_cell_primary">
+                              <h3 class="title">服务器被删除了</h3>
+                              <p class="summary">因为没钱付服务器年费，所以一直都是月付，然后每个月服务器商会发来短信告诉我要缴费了。</p>
+                            </div>
+                            <div class="weui_cell_ft">
+                            </div>
+                          </div>
+                          <div class="weui_cell">
+                            <div class="weui_cell_hd">
+                              <img src="http://mmrb.github.io/avatar/shenfei.jpg" alt="" class="cover">
+                            </div>
+                            <div class="weui_cell_bd weui_cell_primary">
+                              <h3 class="title">QQ浏览器X5内核问题汇总</h3>
+                              <p class="summary">常常被人问及微信中使用的X5内核的问题，其实我也不是很清楚，只知道它是基于android 4.2的webkit，版本号是webkit 534。</p>
+                            </div>
+                            <div class="weui_cell_ft">
+                            </div>
+                          </div>
+                          <div class="weui_cell">
+                            <div class="weui_cell_hd">
+                              <img src="http://mmrb.github.io/avatar/gaby.jpg" alt="" class="cover">
+                            </div>
+                            <div class="weui_cell_bd weui_cell_primary">
+                              <h3 class="title">运营商劫持https？oh shit！</h3>
+                              <p class="summary">最近遇到微信图文消息被联通劫持的事情，着实被震惊到了。</p>
+                            </div>
+                            <div class="weui_cell_ft">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="weui_tab_bd_item">
+                    <h3>我</h3>
+                    <div class="weui_cells_title">选择</div>
+                    <div class="weui_cells">
+                        <div class="weui_cell weui_cell_select weui_select_before">
+                            <div class="weui_cell_hd">
+                                <select class="weui_select" name="select2">
+                                    <option value="1">+86</option>
+                                    <option value="2">+80</option>
+                                    <option value="3">+84</option>
+                                    <option value="4">+87</option>
+                                </select>
+                            </div>
+                            <div class="weui_cell_bd weui_cell_primary">
+                                <input class="weui_input" type="tel" placeholder="请输入号码">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weui_cells_title">选择</div>
+                    <div class="weui_cells">
+                        <div class="weui_cell weui_cell_select">
+                            <div class="weui_cell_bd weui_cell_primary">
+                                <select class="weui_select" name="select1">
+                                    <option selected="" value="1">微信号</option>
+                                    <option value="2">QQ号</option>
+                                    <option value="3">Email</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="weui_cell weui_cell_select weui_select_after">
+                            <div class="weui_cell_hd">
+                                国家/地区
+                            </div>
+                            <div class="weui_cell_bd weui_cell_primary">
+                                <select class="weui_select" name="select2">
+                                    <option value="1">中国</option>
+                                    <option value="2">美国</option>
+                                    <option value="3">英国</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui_tabbar">
+                <a href="javascript:;" class="weui_tabbar_item">
+                    <div class="weui_tabbar_icon">
+                        <img src="http://weui.github.io/weui/images/icon_nav_button.png" alt="">
+                    </div>
+                    <p class="weui_tabbar_label">微信</p>
+                </a>
+                <a href="javascript:;" class="weui_tabbar_item">
+                    <div class="weui_tabbar_icon">
+                        <img src="http://weui.github.io/weui/images/icon_nav_msg.png" alt="">
+                    </div>
+                    <p class="weui_tabbar_label">通讯录</p>
+                </a>
+                <a href="javascript:;" class="weui_tabbar_item">
+                    <div class="weui_tabbar_icon">
+                        <img src="http://weui.github.io/weui/images/icon_nav_article.png" alt="">
+                    </div>
+                    <p class="weui_tabbar_label">发现</p>
+                </a>
+                <a href="javascript:;" class="weui_tabbar_item">
+                    <div class="weui_tabbar_icon">
+                        <img src="http://weui.github.io/weui/images/icon_nav_cell.png" alt="">
+                    </div>
+                    <p class="weui_tabbar_label">我</p>
+                </a>
+            </div>
+        </div>
+        <script type="text/javascript" src="../weishop/scripts/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="http://rawgit.com/progrape/weui.js/master/dist/weui.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $('.weui_tab').tab();
+              var max = 200;
+              $('#textarea').on('input', function(){
+                 var text = $(this).val();
+                 var len = text.length;
+                
+                 $('#count').text(len);
+                
+                 if(len > max){
+                   $(this).closest('.weui_cell').addClass('weui_cell_warn');
+                 }
+                 else{
+                   $(this).closest('.weui_cell').removeClass('weui_cell_warn');
+                 }
+                 
+              });
+            });
+        </script>
+    </body>
+</html>

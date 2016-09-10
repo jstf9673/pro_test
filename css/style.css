@@ -1,0 +1,44 @@
+/* 
+* @Author: anchen
+* @Date:   2015-10-14 16:46:15
+* @Last Modified by:   anchen
+* @Last Modified time: 2015-10-14 16:55:00
+*/
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://fonts.gstatic.com/s/materialicons/v7/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/*header*/
+ .header{height: 55px;text-align: center;color:#fff;background:#18b4ed;line-height: 55px;position: fixed;top: 0;left: 0;width:100%;overflow:hidden;padding: 0 10px;position: relative;}
+    .header h2{font-size: 20px;}
+    .header .p_left,.header .p_right{position: absolute;top:50%;margin-top: -27.5px;}
+    .header .p_left{left:10px;}
+    /*.header .p_right{right:30px;}*/
+    .left{float: left;}
+    .right{float:right;}
+    .cart{margin-right: 30px;}
+    .back img{width:25px;height:20px;vertical-align: middle;}
+    .cart img{width:25px;height:20px;vertical-align: middle;}
+
+/*内容*/
+.content{overflow-x: hidden;margin:0 auto;}
+.banner{width:100%;margin:0 auto;}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        <title>lazysizes</title>
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Web Starter Kit">
+        <meta name="msapplication-TileColor" content="#3372DF">
+        <style type="text/css" media="screen">
+            html,body{margin: 0;padding:0;}
+            .lazyload {
+                opacity: 0;
+            }
+
+            .lazyloading {
+                opacity: 1;
+                transition: opacity 300ms;
+                /*background: #f7f7f7 url(loader.gif) no-repeat center;*/
+            }
+            .cons{display:inline-block;width:32%;padding:4px;border: 1px solid #999;border-radius: 4px;}
+            .load_con{position: relative;padding-bottom: 75%;height:0;}
+            .load_con img{position:absolute;width:100%;height:100%;top: 0;left: 0;}
+        </style>
+    </head>
+    <body>
+        <!-- non-responsive: -->
+        <img data-src="https://farm6.staticflickr.com/5531/9638435181_7e3e44c2b8_b.jpg" class="lazyload" />
+        <!-- responsive example with automatic sizes calculation: -->
+        <img
+            data-sizes="auto"
+            data-src="https://farm6.staticflickr.com/5531/9638435181_7e3e44c2b8_b.jpg"
+            data-srcset="image1.jpg 300w,
+            image2.jpg 600w,
+            image3.jpg 900w" class="lazyload" />
+        <!-- iframe example -->
+        <iframe frameborder="0"
+            class="lazyload"
+            allowfullscreen=""
+            data-src="//www.youtube.com/embed/ZfV-aYdU4uE">
+        </iframe>
+        <div class="content">
+            <div class="cons">
+                <div class="load_con">
+                    <img src="https://farm6.staticflickr.com/5531/9638435181_7e3e44c2b8_b.jpg">
+                </div>
+            </div>
+            <div class="cons">
+                <div class="load_con">
+                    <img src="https://farm6.staticflickr.com/5531/9638435181_7e3e44c2b8_b.jpg">
+                </div>
+            </div>
+            <div class="cons">
+                <div class="load_con">
+                    <img src="https://farm6.staticflickr.com/5531/9638435181_7e3e44c2b8_b.jpg">
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="../weishop/scripts/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="../js/node_modules/lazysizes/lazysizes.js"></script>
+        <script type="text/javascript">
+            function loadJS(u){
+                var r=document.getElementsByTagName("script")[ 0 ],s=document.createElement("script");s.src=u;r.parentNode.insertBefore(s,r);
+            }
+            if(!window.HTMLPictureElement || !('sizes' in document.createElement('img'))){
+                document.createElement('picture');
+                loadJS("../js/node_modules/lazysizes/plugins/respimg/ls.respimg.min.js");
+            }
+        </script>
+    </body>
+</html>
