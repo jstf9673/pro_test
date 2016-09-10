@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style type="text/css" media="screen">
+            h1 {
+                width: 15ch; /* Width of text */
+                overflow: hidden;
+                white-space: nowrap;
+                border-right: .05em solid;
+            }
+            @keyframes caret {
+                50% { border-color: currentColor; }
+            }
+            h1 {
+                /* ... */
+                border-right: .05em solid transparent;
+                animation: typing 6s steps(15),caret 1s steps(1) infinite;
+            }
+            @keyframes typing {
+                from { width: 0 }
+            }
+            @keyframes caret {
+                50% { border-color: transparent; }
+            }
+            h1 {
+                width: 15ch; /* Width of text */
+                overflow: hidden;
+                white-space: nowrap;
+                border-right: .05em solid;
+                animation: typing 6s steps(15),caret 1s steps(1) infinite;
+            }
+            .path{width:300px;height: 300px;border-radius: 100%;background: yellow;padding: 20px;}
+            .path img{margin: calc(50% - 25px) ;width:50px;border-radius: 50%;}
+            @keyframes spin{
+              from{
+                transform: rotate(0turn) translateY(-150px) translateY(50%) rotate(1turn);
+              }
+              to {
+                transform: rotate(1turn) translateY(-150px) translateY(50%) rotate(0turn);
+              }
+            }
+            .avatar {
+             animation: spin 3s infinite linear;
+            }
+            .easeout{display: block;background-image: url(http://www.open-open.com/resource/logo-icon.png);width:50px;height:50px;border-radius: 50%;background-size: 50px auto;}
+            .easeout{transition: all 2s ease-out;}
+            @-webkit-keyframes rotate {
+              from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                transform: rotate(0deg); }
+              to {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                transform: rotate(360deg); } 
+            }
+        </style>
+    </head>
+    <body>
+        <h1>hello css animation</h1>
+        <div class="path">
+            <img src="http://www.open-open.com/resource/logo-icon.png" class="avatar" />
+        </div>
+        <a class="easeout"></a>
+        <script type="text/javascript">
+            var aH1 = document.getElementsByTagName('h1');
+            for(var i = 0, len = aH1.length; i < len; i++){
+                var textLen = aH1[i].textContent.length, s = aH1[i].style;
+                s.width = textLen + 'ch';
+                s.animationTimingFunction = "steps("+textLen+"),steps(1)";
+            }
+        </script>
+    </body>
+</html>
