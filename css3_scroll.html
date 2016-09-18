@@ -75,4 +75,57 @@
         </div>
         <div class="csstricks"> csstricks  csstricks csstricks csstricks csstricks csstricks csstricks csstricks csstricks csstricks csstricks csstricks csstricks csstricks</div>
     </body>
+    <script>
+    //alloy_touch.js useage
+         document.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+    }, false);
+
+    var headHeight = window.innerWidth * 500 / 750;
+
+    var $content = $(".content"),
+        target = $content[0];
+    var $coverImg = $(".head-cover span"),
+        copyImg = $coverImg[0];
+    var $headImg = $(".headImg span");
+    
+    $coverImg.attr("style",$headImg.attr("style"));
+
+    Transform(target);
+    Transform(copyImg);
+    
+    var at = new AlloyTouch({
+        touch: ".main", //反馈触摸的dom
+        vertical: true, //不必需，默认是true代表监听竖直方向touch
+        target: target, //运动的对象
+        property: "translateY", //被滚动的属性
+        sensitivity: 1, //不必需,触摸区域的灵敏度，默认值为1，可以为负数
+        factor: 1, //不必需,默认值是1代表touch区域的1px的对应target.y的1
+        min: window.innerHeight - $('.content').height(), //不必需,滚动属性的最小值
+        max: 0, //不必需,滚动属性的最大值
+        spring: false, //不必需,是否有回弹效果。默认是true
+        inertia: true, //不必需,是否有惯性。默认是true
+        topDis: '.3',
+        bottomDis: '.5',
+        bottomMax: '200',
+        touchStart: function(value) {
+            $('.notice').addClass('active');
+        },
+        touchMove: function(value) {},
+        touchEnd: function(value) {},
+        animationEnd: function(value) {
+            $('.notice').removeClass('active');
+        },
+        change: function(value) {
+            if (value>0) {
+                $coverImg.show();
+                $headImg.hide();
+                copyImg.scaleX = copyImg.scaleY = (headHeight + value) / headHeight;
+            } else {
+                $coverImg.hide();
+                $headImg.show();
+            }
+        }
+    })
+    </script>
 </html>
