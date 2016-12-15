@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+        <title>position内滚动布局</title>
+        <style type="text/css">
+            html,body{margin: 0;padding: 0;position:relative;overflow: hidden;text-align: center;color:#000;width:100%;height:100%;}
+            .page{
+                position:absolute;
+                left:0;
+                right:0;
+                top: 0;
+                bottom: 0;
+            }
+            .header{
+                border-bottom: 1px solid #fe5e5e;
+                position:absolute;
+                left:0;
+                right:0;
+                top: 0;
+                height:64px;
+            }
+            .left-side{
+                border-right: 1px solid #fe5e5e;
+                position:absolute;
+                left:0;
+                top: 64px;
+                width:20%;
+            }
+            .right-side{
+                border-left: 1px solid #fe5e5e;
+                position:absolute;
+                right:0;
+                top: 64px;
+                width:20%;
+            }
+            .content{
+                z-index: 88;
+                background:#b2b2b2;
+                border: 1px solid #fe5e5e;
+                position:absolute;
+                left:20%;
+                right:20%;
+                top: 64px;
+                bottom:0;
+                overflow:auto;
+                /*height:2000px;*/
+            }
+            .img-responsive{max-width: 100%;display:block;margin-left: auto;margin-right: auto;}
+            .overlay{
+                    position: absolute; top: 0; left: 0; bottom: 0; width: 100%;
+                    background-color: rgba(0,0,0,.5);
+                    filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#7F000000,endcolorstr=#7F000000);
+                    overflow: auto;
+                    z-index: 100;
+                    display:none;
+            }
+            .dialog{
+                width:50%;
+                height:50%;
+                background:#fff;
+                border: 1px solid #b2b2b2;
+                position:absolute;
+                top: 50%;
+                left:50%;
+                -webkit-transform: translate(-50%,-50%);
+                -moz-transform: translate(-50%,-50%);
+                transform: translate(-50%,-50%);
+            }
+        </style>
+    </head>
+    <body>
+    <div class="page">
+        <div class="overlay">
+            <div class="dialog">
+                <h3>this is dialog</h3>
+                <div class="dialog-con">hahahahahahahahah......</div>
+                <div class="dialog-btns">
+                    <button type="button">confirm</button>
+                    <button type="button">cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="header"><h2>this is header</h2></div>
+        <div class="left-side">this is left-side</div>
+        <div class="content">
+            <h3>this is content</h3>
+            <button type="button" class="i-overlay">this is button</button>
+            <img class="img-responsive" src="http://gameweb-img.qq.com/gad/20160310/8b9a427ac8ac476ebf445651b63f9a61.002.1457574496.jpeg">
+            <img class="img-responsive" src="http://gameweb-img.qq.com/gad/20160310/8b9a427ac8ac476ebf445651b63f9a61.003.1457574496.jpeg">
+            <img class="img-responsive" src="http://gameweb-img.qq.com/gad/20160310/8b9a427ac8ac476ebf445651b63f9a61.004.1457574496.png">
+            <img class="img-responsive" src="http://gameweb-img.qq.com/gad/20160310/8b9a427ac8ac476ebf445651b63f9a61.005.1457574496.png">
+            <img class="img-responsive" src="http://gameweb-img.qq.com/gad/20160310/8b9a427ac8ac476ebf445651b63f9a61.006.1457574496.png">
+            <img class="img-responsive" src="http://gameweb-img.qq.com/gad/20160310/8b9a427ac8ac476ebf445651b63f9a61.006.1457574496.png">
+            <img class="img-responsive" src="http://gameweb-img.qq.com/gad/20160310/8b9a427ac8ac476ebf445651b63f9a61.006.1457574496.png">
+        </div>
+        <div class="right-side">this is right-side</div>
+        <!-- <div class="footer">footer</div> -->
+    </div>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $('.content').scroll(function(event) {
+            var maxScrollTop = $(this).scrollTop();
+            console.log(maxScrollTop);
+            console.log($(document).height());
+            if(maxScrollTop>=$(document).height()-maxScrollTop){
+                alert('滚到底啦啦啦啦');
+            }
+        });
+            console.log($('.content').scrollTop());
+        $('.i-overlay').click(function(event) {
+            $('.overlay').fadeIn(1000);
+        });
+        $('.dialog-btns button').click(function(event) {
+            $('.overlay').fadeOut(1000);
+        });
+    </script>
+    </body>
+</html>
