@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input id="dep" type="text" maxlength="14">
+    <script type="text/javascript">
+        var inputs=document.getElementById('dep');
+        var searchTimer;
+        inputs.addEventListener('input',function(){
+            var inval=inputs.value;
+            clearTimeout(searchTimer);
+            searchTimer=setTimeout(function(){
+                if(inval.length<=14){
+                    console.log(inval);
+                }
+            },1000);
+        });
+    </script>
+</body>
+</html>
