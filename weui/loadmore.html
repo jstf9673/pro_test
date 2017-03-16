@@ -5,50 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>loadmore</title>
-  <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
-<link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+  <link rel="stylesheet" href="weui-refresh.css">
+  <!-- <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css"> -->
   <!-- <link rel="stylesheet" href="http://jqweui.com/dist/lib/weui.min.css"> -->
   <style>
-
+  .fixed{position: fixed;top: 0;left: 0;height: 200px;width: 100%;}
   img{max-width: 100%;}
+  .loads{position: fixed;top: 200px;width: 100%;left: 0;height: 100%;overflow: hidden;}
+  .load-wrap{position: absolute;top: 0;width: 100%;height: 100%;left: 0;overflow-y: scroll;}
+  ::-webkit-scrollbar{
+       width:0;//去除滚动条
+  }
   </style>
 </head>
 <body>
-  <div class="weui-pull-to-refresh__layer">
-    <div class='weui-pull-to-refresh__arrow'></div>
-    <div class='weui-pull-to-refresh__preloader'></div>
-    <div class="down">下拉刷新</div>
-    <div class="up">释放刷新</div>
-    <div class="refresh">正在刷新</div>
+  <div class="container" style="position:relative;">
+    <img class="fixed" src="http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-13-17265708_396005157434387_3099040288153272320_n.jpg" alt="">
+    <div class="loads">
+      <div class="load-wrap">
+        <div class="weui-pull-to-refresh__layer">
+          <div class='weui-pull-to-refresh__arrow'></div>
+          <div class='weui-pull-to-refresh__preloader'></div>
+          <div class="down">下拉刷新</div>
+          <div class="up">释放刷新</div>
+          <div class="refresh">正在刷新</div>
+        </div>
+        <h1 class="demos-title">滚动加载</h1>
+        <div id="time"></div>
+        <div id="list" class='demos-content-padded'>
+        </div>
+        <div class="weui-loadmore">
+          <i class="weui-loading"></i>
+          <span class="weui-loadmore__tips">正在加载</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <h1 class="demos-title">滚动加载</h1>
-  <div id="time"></div>
-  <div id="list" class='demos-content-padded'>
-
-    <p>《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》是最权威、最经典的人工智能教材，已被全世界100多个国家的1200多所大学用作教材。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》的最新版全面而系统地介绍了人工智能的理论和实践，阐述了人工智能领域的核心内容，并深入介绍了各个主要的研究方向。全书分为七大部分：第Ⅰ部分“人工智能”，第Ⅱ部分“问题求解”，第Ⅲ部分“知识、推理与规划”，第Ⅳ部分“不确定知识与推理”，第Ⅴ部分“学习”，第Ⅵ部分“通信、感知与行动”，第Ⅶ部分“结论”。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》既详细介绍了人工智能的基本概念、思想和算法，还描述了其各个研究方向最前沿的进展，同时收集整理了详实的历史文献与事件。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》适合于不同层次和领域的研究人员及学生，是高等院校本科生和研究生人工智能课的首选教材，也是相关领域的科研与工程技术人员的重要参考书。</p>
-
-    <p>《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》是最权威、最经典的人工智能教材，已被全世界100多个国家的1200多所大学用作教材。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》的最新版全面而系统地介绍了人工智能的理论和实践，阐述了人工智能领域的核心内容，并深入介绍了各个主要的研究方向。全书分为七大部分：第Ⅰ部分“人工智能”，第Ⅱ部分“问题求解”，第Ⅲ部分“知识、推理与规划”，第Ⅳ部分“不确定知识与推理”，第Ⅴ部分“学习”，第Ⅵ部分“通信、感知与行动”，第Ⅶ部分“结论”。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》既详细介绍了人工智能的基本概念、思想和算法，还描述了其各个研究方向最前沿的进展，同时收集整理了详实的历史文献与事件。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》适合于不同层次和领域的研究人员及学生，是高等院校本科生和研究生人工智能课的首选教材，也是相关领域的科研与工程技术人员的重要参考书。</p>
-
-    <p>《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》是最权威、最经典的人工智能教材，已被全世界100多个国家的1200多所大学用作教材。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》的最新版全面而系统地介绍了人工智能的理论和实践，阐述了人工智能领域的核心内容，并深入介绍了各个主要的研究方向。全书分为七大部分：第Ⅰ部分“人工智能”，第Ⅱ部分“问题求解”，第Ⅲ部分“知识、推理与规划”，第Ⅳ部分“不确定知识与推理”，第Ⅴ部分“学习”，第Ⅵ部分“通信、感知与行动”，第Ⅶ部分“结论”。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》既详细介绍了人工智能的基本概念、思想和算法，还描述了其各个研究方向最前沿的进展，同时收集整理了详实的历史文献与事件。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》适合于不同层次和领域的研究人员及学生，是高等院校本科生和研究生人工智能课的首选教材，也是相关领域的科研与工程技术人员的重要参考书。</p>
-
-    <p>《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》是最权威、最经典的人工智能教材，已被全世界100多个国家的1200多所大学用作教材。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》的最新版全面而系统地介绍了人工智能的理论和实践，阐述了人工智能领域的核心内容，并深入介绍了各个主要的研究方向。全书分为七大部分：第Ⅰ部分“人工智能”，第Ⅱ部分“问题求解”，第Ⅲ部分“知识、推理与规划”，第Ⅳ部分“不确定知识与推理”，第Ⅴ部分“学习”，第Ⅵ部分“通信、感知与行动”，第Ⅶ部分“结论”。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》既详细介绍了人工智能的基本概念、思想和算法，还描述了其各个研究方向最前沿的进展，同时收集整理了详实的历史文献与事件。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》适合于不同层次和领域的研究人员及学生，是高等院校本科生和研究生人工智能课的首选教材，也是相关领域的科研与工程技术人员的重要参考书。</p>
-
-    <p>《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》是最权威、最经典的人工智能教材，已被全世界100多个国家的1200多所大学用作教材。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》的最新版全面而系统地介绍了人工智能的理论和实践，阐述了人工智能领域的核心内容，并深入介绍了各个主要的研究方向。全书分为七大部分：第Ⅰ部分“人工智能”，第Ⅱ部分“问题求解”，第Ⅲ部分“知识、推理与规划”，第Ⅳ部分“不确定知识与推理”，第Ⅴ部分“学习”，第Ⅵ部分“通信、感知与行动”，第Ⅶ部分“结论”。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》既详细介绍了人工智能的基本概念、思想和算法，还描述了其各个研究方向最前沿的进展，同时收集整理了详实的历史文献与事件。《世界著名计算机教材精选·人工智能:一种现代的方法(第3版)》适合于不同层次和领域的研究人员及学生，是高等院校本科生和研究生人工智能课的首选教材，也是相关领域的科研与工程技术人员的重要参考书。</p>
-
-  </div>
-  <div class="weui-loadmore">
-    <i class="weui-loading"></i>
-    <span class="weui-loadmore__tips">正在加载</span>
-  </div>
-  <script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+  <script src="./infinite.js"></script>
+  <!-- <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script> -->
   <script>
     var loading = false;
     var page =1;
+    var pull_action='';
     var loadend=false;
-    // $(document).ready(function(){
-    //   getData();
-    // });
+    $(document).ready(function(){
+      getData();
+    });
     function getData(){
       $.ajax({
         url:'https://gank.io/api/data/福利/10/'+page,
@@ -56,24 +60,39 @@
         dataType:'json',
         success:function(data){
           if(!data.error){
-            loadend=true;
+            // loadend=true;
             loading = false;
-            if(page==1){
-              var html='';
-              for(var i = 0;i<data.results.length;i++){
-                html+='<p><img src="'+data.results[i].url+'" alt=""/><h3>'+data.results[i].createdAt+'</h3></p>';
+            if(data.results.length<=0){
+              if(pull_action=='up'){
+                $('.load-wrap').pullToRefreshDone();
+              }else if(pull_action=='down'){
+                $('.load-wrap').destroyInfinite();
               }
+              return;
+            }
+            var html='';
+            for(var i = 0;i<data.results.length;i++){
+              html+='<p><img src="'+data.results[i].url+'" alt=""/><h3>'+data.results[i].createdAt+'</h3></p>';
+            }
+            if(page==1){
               $("#list").html(html);
             }else{
-              if(data.results.length>1){
-                for(var i = 0;i<data.results.length;i++){
-                  $("#list").append('<p><img src="'+data.results[i].url+'" alt=""/><h3>'+data.results[i].createdAt+'</h3></p>');
-                }
-              }else{
-                $(document.body).destroyInfinite();
-                $('.weui-loadmore').hide();
-                loading=false;
-              }
+              $("#list").append(html);
+            }
+            if(data.results.length<10){
+
+            }
+            page++;
+            if(pull_action=='up'){
+              $('.load-wrap').pullToRefreshDone();
+            }else if(pull_action=='down'){
+              loading = false;
+            }
+          }else{
+            if(pull_action=='up'){
+              $('.load-wrap').pullToRefreshDone();
+            }else if(pull_action=='down'){
+              loading = false;
             }
           }
         },
@@ -82,31 +101,24 @@
         }
       });
     }
-    $(document.body).infinite();
-    $(document.body).infinite().on("infinite", function() {
+    $('.load-wrap').infinite(50).on("infinite", function() {
+      pull_action='down';
+      console.log(pull_action);
       if(loading) return;
       loading = true;
-      page++;
-      if(page>3){
-        $(document.body).destroyInfinite();
-        $('.weui-loadmore').hide();
-        loading = false;
-        return;
-      }
       setTimeout(function() {
         getData();
 
       }, 2000);
     });
-    $(document.body).pullToRefresh().on("pull-to-refresh", function() {
+    $('.load-wrap').pullToRefresh().on("pull-to-refresh", function() {
+      pull_action='up';
+      console.log(pull_action);
       page=1;
-      getData();
-      if(loadend){
         setTimeout(function() {
-          $("#time").text(new Date);
-          $(document.body).pullToRefreshDone();
+          getData();
+          $('.load-wrap').infinite(50);
         }, 2000);
-      }
      });
   </script>
 </body>
