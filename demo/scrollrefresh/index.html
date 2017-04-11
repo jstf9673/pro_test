@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .wrap{
+      width: 100%;height: 100%;
+    }
+    .temp{
+      width: 100%;border: 1px solid #333;height: 1000px;
+    }
+    .content img{
+      max-width: 100%;
+      /*opacity: 0;
+       -webkit-transition: opacity 0.25s ease-in-out;
+       -moz-transition: opacity 0.25s ease-in-out;
+       -o-transition: opacity 0.25s ease-in-out;
+       transition: opacity 0.25s ease-in-out;*/
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="temp">alt</div>
+    <div class="content">this is content</div>
+  </div>
+  <script src="./module.js"></script>
+  <script>
+    console.log(window.a);
+    // (function(){
+      var force = false;
+      var innerHeight,slideCache;
+      var lastScrollY = window.pageYOffset;
+      window.setTimeout(handleScroll, 100);
+    // })();
+    function handleScroll (e, force) {
+        // // 如果时间间隔内，没有发生滚动，且并未强制触发加载，则do nothing，再次间隔100毫秒之后查询
+        if (!force && lastScrollY === window.scrollY) {
+            window.setTimeout(handleScroll, 100);
+            return;
+        }
+        else {
+            // 更新文档滚动位置
+            lastScrollY = window.scrollY;
+        }
+        // scrollY = window.scrollY;
+        // // 浏览器窗口的视口（viewport）高度赋值
+        innerHeight = window.innerHeight;
+        // // 计算isVisible上下阈值
+        // topViewPort = scrollY - 1000;
+        // bottomViewPort = scrollY + innerHeight + 600;
+        //
+        // // 判断是否需要加载
+        // // document.body.offsetHeight;返回当前网页高度
+        if (window.scrollY + innerHeight + 200 > document.body.offsetHeight) {
+          console.log(e,window.scrollY,document.body.offsetHeight,innerHeight);
+            fetchContent();
+        }
+        // // 实现懒加载
+        // handleDefer();
+        window.setTimeout(handleScroll, 100);
+    }
+    function fetchContent(){
+      force=true;
+      var template = '<p><img src="https://srctest.didi365.com/didi365/Upload/temp/20170216/merchant/goods/20170216/58a520ed921a8_580x725.jpg" alt="" /></p>';
+      var htl = document.createElement('div');
+      htl.className = 'addscon';
+      htl.innerHTML = template;
+      var con = document.querySelector('.content');
+      con.appendChild(htl);
+      setTimeout(function(){
+
+        force=false;
+      },1000);
+    }
+    function handleDefer   () {
+        // 时间记录
+        console.time('defer');
+
+        // 获取dom缓存
+        var list = slideCache;
+        // 对于遍历list里的每一项，都使用一个变量，而不是在循环内部声明。节省内存，把性能高效，做到极致。
+        var thisImg;
+
+        for (var i = 0, len = list.length; i < len; i++) {
+            thisImg = list[i].img; // 这里我们都是从内存中读取，而不用读取DOM节点
+            var deferSrc = list[i].src; // 这里我们都是从内存中读取，而不用读取DOM节点
+            // 判断元素是否可见
+            if (isVisible(list[i].id)) {
+                // 这个函数是图片onload逻辑
+                var handler = function () {
+                    var node = thisImg;
+                    var src = deferSrc;
+                    // 创建一个闭包
+                    return function () {
+                        node.src = src;
+                        node.style.opacity = 1;
+                    }
+                }
+                var img = new Image();
+                img.onload = handler();
+                img.src = list[i].src;
+            }
+        }
+        console.timeEnd('defer');
+    }
+  </script>
+</body>
+</html>
