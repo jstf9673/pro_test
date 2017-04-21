@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,15 +11,46 @@
   <!-- <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css"> -->
   <!-- <link rel="stylesheet" href="http://jqweui.com/dist/lib/weui.min.css"> -->
   <style>
-  .fixed{position: fixed;top: 0;left: 0;height: 200px;width: 100%;}
-  img{max-width: 100%;}
-  .loads{position: fixed;top: 200px;width: 100%;left: 0;height: 100%;overflow: hidden;}
-  .load-wrap{position: absolute;top: 0;width: 100%;height: 100%;left: 0;overflow-y: scroll;}
-  ::-webkit-scrollbar{
-       width:0;//去除滚动条
-  }
+    .fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 200px;
+      width: 100%;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .loads {
+      position: fixed;
+      top: 200px;
+      width: 100%;
+      left: 0;
+      bottom: -50px;
+      overflow: hidden;
+    }
+
+    .load-wrap {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      overflow-y: scroll;
+      text-align: center;
+    }
+    .load-wrap #list{
+      margin: 0 auto;text-align: center;
+    }
+
+     ::-webkit-scrollbar {
+      width: 0; //去除滚动条
+    }
   </style>
 </head>
+
 <body>
   <div class="container" style="position:relative;">
     <img class="fixed" src="http://7xi8d6.com1.z0.glb.clouddn.com/2017-03-13-17265708_396005157434387_3099040288153272320_n.jpg" alt="">
@@ -47,64 +79,66 @@
   <!-- <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script> -->
   <script>
     var loading = false;
-    var page =1;
-    var pull_action='';
-    var loadend=false;
-    $(document).ready(function(){
+    var page = 1;
+    var pull_action = '';
+    var loadend = false;
+    $(document).ready(function() {
       getData();
     });
-    function getData(){
+
+    function getData() {
       $.ajax({
-        url:'https://gank.io/api/data/福利/10/'+page,
-        type:'get',
-        dataType:'json',
-        success:function(data){
-          if(!data.error){
+        url: 'https://gank.io/api/data/福利/10/' + page,
+        type: 'get',
+        dataType: 'json',
+        success: function(data) {
+          if (!data.error) {
             // loadend=true;
             loading = false;
-            if(data.results.length<=0){
-              if(pull_action=='up'){
+            if (data.results.length <= 0) {
+              if (pull_action == 'up') {
                 $('.load-wrap').pullToRefreshDone();
-              }else if(pull_action=='down'){
+              } else if (pull_action == 'down') {
                 $('.load-wrap').destroyInfinite();
               }
               return;
             }
-            var html='';
-            for(var i = 0;i<data.results.length;i++){
-              html+='<p><img src="'+data.results[i].url+'" alt=""/><h3>'+data.results[i].createdAt+'</h3></p>';
+            var html = '';
+            for (var i = 0; i < data.results.length; i++) {
+              html += '<p><img src="' + data.results[i].url + '" alt=""/><h3 style="text-align:center;">' + data.results[i].createdAt + '</h3></p>';
             }
-            if(page==1){
+            if (page == 1) {
               $("#list").html(html);
-            }else{
+            } else {
               $("#list").append(html);
             }
-            if(data.results.length<10){
-
+            if (data.results.length < 10) {
+              $('.load-wrap').destroyInfinite();
+              $('.weui-loadmore').hide();
             }
             page++;
-            if(pull_action=='up'){
+            if (pull_action == 'up') {
               $('.load-wrap').pullToRefreshDone();
-            }else if(pull_action=='down'){
+            } else if (pull_action == 'down') {
               loading = false;
             }
-          }else{
-            if(pull_action=='up'){
+          } else {
+            if (pull_action == 'up') {
               $('.load-wrap').pullToRefreshDone();
-            }else if(pull_action=='down'){
+            } else if (pull_action == 'down') {
               loading = false;
             }
           }
         },
-        error:function(err){
+        error: function(err) {
           alert('err');
         }
       });
     }
     $('.load-wrap').infinite(50).on("infinite", function() {
-      pull_action='down';
+      pull_action = 'down';
       console.log(pull_action);
-      if(loading) return;
+      if (loading) return;
       loading = true;
       setTimeout(function() {
         getData();
@@ -112,14 +146,16 @@
       }, 2000);
     });
     $('.load-wrap').pullToRefresh().on("pull-to-refresh", function() {
-      pull_action='up';
+      pull_action = 'up';
       console.log(pull_action);
-      page=1;
-        setTimeout(function() {
-          getData();
-          $('.load-wrap').infinite(50);
-        }, 2000);
-     });
+      page = 1;
+      setTimeout(function() {
+        getData();
+        $('.load-wrap').infinite(50);
+        $('.weui-loadmore').hide();
+      }, 2000);
+    });
   </script>
 </body>
+
 </html>
