@@ -74,6 +74,31 @@
       </div>
     </div>
   </div>
+  <div id="actionSheet_wrap">
+      <div id="mask" class="weui_mask_transition" style="display: none;"></div>
+      <div id="weui_actionsheet" class="weui_actionsheet" style="height: 50rem;z-index:2000;">
+          <i class="close" style="z-index:999"></i>
+          <div class="box-text">读者赞赏</div>
+          <div class="loads-container">
+            <div class="load-wrap">
+            <div class="weui-pull-to-refresh__layer">
+              <div class='weui-pull-to-refresh__arrow'></div>
+              <div class='weui-pull-to-refresh__preloader'></div>
+              <div class="down">下拉刷新</div>
+              <div class="up">释放刷新</div>
+              <div class="refresh">正在刷新</div>
+            </div>
+            <ul class="select-box">
+            </ul>
+            <div class="weui-loadmore">
+              <i class="weui-loading"></i>
+              <span class="weui-loadmore__tips">正在加载</span>
+            </div>
+            <div class="weui-nomore" style="display:none;text-align:center">没有更多了</div>
+          </div>
+          </div>
+      </div>
+  </div>
   <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
   <script src="./infinite.js"></script>
   <!-- <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script> -->
