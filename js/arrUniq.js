@@ -47,3 +47,5 @@ Array.prototype.arrUniq = function() {
     }
     return arrClone;
 }
+//test
+// arr.arrUniq();
