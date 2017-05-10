@@ -11,6 +11,11 @@
   <!-- <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css"> -->
   <!-- <link rel="stylesheet" href="http://jqweui.com/dist/lib/weui.min.css"> -->
   <style>
+    html,
+    body {
+      height: 100%;
+    }
+
     .fixed {
       position: fixed;
       top: 0;
@@ -74,23 +79,6 @@
       </div>
     </div>
   </div>
-  <div class="box-text">读者赞赏</div>
-  <div class="load-wrap">
-    <!-- <div class="weui-pull-to-refresh__layer">
-      <div class='weui-pull-to-refresh__arrow'></div>
-      <div class='weui-pull-to-refresh__preloader'></div>
-      <div class="down">下拉刷新</div>
-      <div class="up">释放刷新</div>
-      <div class="refresh">正在刷新</div>
-    </div> -->
-    <ul class="select-box">
-    </ul>
-    <div class="weui-loadmore">
-      <i class="weui-loading"></i>
-      <span class="weui-loadmore__tips">正在加载</span>
-    </div>
-    <div class="weui-nomore" style="display:none;text-align:center">没有更多了</div>
-  </div>
   <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
   <script src="./infinite.js"></script>
   <!-- <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script> -->
@@ -122,7 +110,7 @@
             }
             var html = '';
             for (var i = 0; i < data.results.length; i++) {
-              html += '<p><img src="' + data.results[i].url + '" alt=""/><h3 style="text-align:center;">' + data.results[i].createdAt + '</h3></p>';
+              html += '<p><img src="' + data.results[i].url + '" alt=""/><h3>' + data.results[i].createdAt + '</h3></p>';
             }
             if (page == 1) {
               $("#list").html(html);
@@ -130,8 +118,7 @@
               $("#list").append(html);
             }
             if (data.results.length < 10) {
-              $('.load-wrap').destroyInfinite();
-              $('.weui-loadmore').hide();
+
             }
             page++;
             if (pull_action == 'up') {
@@ -153,6 +140,11 @@
       });
     }
     $('.load-wrap').infinite(50).on("infinite", function() {
+      // var container=$('.load-wrap');
+      // var offset = container.scrollHeight() - ($(window).height() + container.scrollTop());
+      // if(offset <= 50) {
+      //   container.trigger("infinite");
+      // }
       pull_action = 'down';
       console.log(pull_action);
       if (loading) return;
@@ -169,7 +161,6 @@
       setTimeout(function() {
         getData();
         $('.load-wrap').infinite(50);
-        $('.weui-loadmore').hide();
       }, 2000);
     });
     // $('#weui_actionsheet').on('touchmove', function(event) {
