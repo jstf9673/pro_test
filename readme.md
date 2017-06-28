@@ -51,6 +51,7 @@
 * [HTML5 please](http://html5please.com)
 * [CSS3 please](http://css3please.com/)
 * [You Might Not Need jQuery](https://github.com/HubSpot/YouMightNotNeedjQuery) 高级浏览器中的JS API来实现jQuery的一些API
+* [sass技能图谱](https://github.com/jstf9673/pro_test/sassLearn.png)
 
 ## Web标准(Standard)
 * [HTML Living Standard－WHATWG](http://www.whatwg.org/specs/web-apps/current-work/multipage/introduction.html) [WHATWG](http://en.wikipedia.org/wiki/WHATWG)维护的持续更新的HTML标准

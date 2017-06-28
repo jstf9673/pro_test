@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>css三栏式布局</title>
+  <style type="text/css">
+    .left,.right{width: 100px;height: 100px;overflow: hidden;}
+
+    .lay1 .container{padding: 0 100px;border: 1px solid #fe5e5e;margin: 0 auto;overflow: hidden;text-align: center;line-height: 100px;}
+    .lay1 .middle{width: 100%;float: left;height: 100px;}
+    .lay1 .left{float: left;margin-left: -100%;width: 100px;background-color: #f26730;position: relative;left: -100px;height: 100px;}
+    .lay1 .right{float: left;margin-left: -100px;width: 100px;background-color: #54871b;position: relative;right: -100px;height: 100px;}
+
+    .lay2 .container{border: 1px solid #fe5e5e;margin: 0 auto;text-align: center;line-height: 100px;overflow: hidden;}
+    .lay2 .left{float: left;width: 100px;background-color: #f26730;margin-left: -100%;}
+    .lay2 .right{float: left;width: 100px;background-color: #54871b;margin-left: -100px;}
+    .lay2 .middle{float: left;width: 100%;}
+    .lay2 .middle-inner{margin: 0 100px;}
+
+    .lay3 .container{width: 100%;border: 1px solid #fe5e5e;margin: 0 auto;text-align: center;line-height: 100px;overflow: hidden;display: flex;}  /*未写兼容*/
+    .lay3 .middle{flex:1;}
+    .lay3 .left{width: 100px;background-color: #f26730;}
+    .lay3 .right{width: 100px;background-color: #54871b;}
+
+    .lay4 .container{overflow: hidden;border: 1px solid #fe5e5e;margin: 0 auto;text-align: center;line-height: 100px;}
+    .lay4 .left{float: left;width: 100px;background-color: #f26730;}
+    .lay4 .middle{margin: 0 100px;}
+    .lay4 .right{float: right;width: 100px;background-color: #54871b;}
+
+    .lay5 .container{overflow: hidden;border: 1px solid #fe5e5e;margin: 0 auto;text-align: center;line-height: 100px;position: relative;}
+    .lay5 .left{position: absolute;width: 100px;background-color: #f26730;left: 0;top: 0;}
+    .lay5 .middle{margin: 0 100px;}
+    .lay5 .right{position: absolute;width: 100px;background-color: #54871b;right: 0;top: 0;}
+  </style>
+</head>
+<body>
+  <div class="lay1">
+    <h3>圣杯布局</h3>
+    <!-- 圣杯的 HTML 结构 -->
+    <div class="container">
+      <!-- 中间的 div 必须写在最前面 -->
+      <div class="middle">中间弹性区</div>
+      <div class="left">左边栏</div>
+      <div class="right">右边栏</div>
+    </div>
+  </div>
+
+  <div class="lay2">
+    <h3>双飞翼布局</h3>
+    <!-- 双飞翼的 HTML 结构 -->
+    <div class="container">
+      <!-- 中间的 div 必须写在最前面 -->
+      <div class="middle">
+           <div class="middle-inner">中间弹性区</div>
+      </div>
+      <div class="left">左边栏</div>
+      <div class="right">右边栏</div>
+    </div>
+  </div>
+  <div class="explain">
+    <h3>圣杯和双飞翼异同</h3>
+    <p class="ex">圣杯布局的方法：设置父盒子的 padding 值为左右盒子留出空位，再利用相对布局对左右盒子调整位置占据 padding 出来的空位；</p>
+    <p class="ex">双飞翼布局的方法：在中间盒子里再增加一个子盒子，直接设置这个子盒子的 margin 值来让出空位，而不用再调整左右盒子。</p>
+  </div>
+
+  <div class="lay3">
+    <h3>flex布局</h3>
+    <div class="container">
+      <div class="left">左边栏</div>
+      <div class="middle">中间弹性区</div>
+      <div class="right">右边栏</div>
+    </div>
+  </div>
+
+  <div class="lay4">
+    <h3>浮动布局</h3>
+    <div class="container">
+      <div class="left">左边栏</div>
+      <div class="right">右边栏</div>
+      <div class="middle">中间弹性区</div>
+    </div>
+  </div>
+
+  <div class="lay5">
+    <h3>绝对定位布局</h3>
+    <div class="container">
+      <div class="middle">中间弹性区</div>
+      <div class="left">左边栏</div>
+      <div class="right">右边栏</div>
+    </div>
+  </div>
+
+</body>
+</html>
