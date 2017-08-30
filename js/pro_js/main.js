@@ -112,14 +112,27 @@ function delCookie(name)//刪除cookie
                     }
                 });
             });
-            function is_weixin(){
-                var ua = navigator.userAgent.toLowerCase();
-                if(ua.match(/MicroMessenger/i)=="micromessenger") {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+           /**
+ * 判断是否是微信
+ */
+function is_weixn() {
+    var iswx = arguments[0] ? arguments[0] : false;//真正的微信客户端判断
+    var ua = navigator.userAgent.toLowerCase();
+    if(iswx){
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+    }else{
+        //在微信，或者非神马嘀嘀客户端都认为是微信（为了支付都统一跳转网页收银台）
+        if (ua.match(/MicroMessenger/i) == "micromessenger" || !ua.match(/shenmadidi/i)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
             //数组去重
             function unique(arr) {
                 var result = [], hash = {};
