@@ -144,3 +144,41 @@ function fetchImage(picUrl, defaultPic, element) {
 // fresh();
 // var sh;
 // sh=setInterval(fresh,1000);
+
+/**
+ * 获取url参数
+ */
+function I(name) {
+    var def;  //默认值
+    if (typeof(arguments[1]) == "undefined") {
+        def = '';
+    } else {
+        def = arguments[1];
+    }
+    var param = window.location.search;  //URL参数
+    if (param == '') {
+        return def;
+    }
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = param.substr(1).match(reg);
+    if (r == null) {
+        return def;
+    }
+    return (r[2]);
+}
+/**
+ * 获取url参数数组
+ */
+function GetUrlPars() {
+    var url = location.search;
+    var Request = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for (var i = 0; i < strs.length; i++) {
+            var sTemp = strs[i].split("=");
+            Request[sTemp[0]] = (sTemp[1]);
+        }
+    }
+    return Request;
+}
