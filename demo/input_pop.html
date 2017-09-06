@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    	<style>
+    		*{
+    			margin: 0;
+    			padding: 0;
+    			-webkit-box-sizing:border-box;
+    		}
+    		html,body{
+    			width: 100%;
+    			height: 100%;
+    		}
+    		.scrollWrapper{
+    			/*position: absolute;*/
+    			left: 0;
+    			top: 0;
+    			right: 0;
+    			bottom: 0;
+    		}
+
+    		.footer{
+    			position: fixed;
+    			left: 0;
+    			bottom: 0;
+    			width: 100%;
+    			font-size: 20px;
+    			overflow: hidden;
+    			padding: 10px;
+    			z-index: 100;
+    		}
+    		.footer input{
+    			width: 60%;
+    			padding: 10px;
+    			border: 1px solid #333;
+    		}
+    		.footer .footer_con{
+    			position: absolute;
+    			right: 10px;
+    			top: 0;
+    			width: 30%;
+    		}
+    	</style>
+    </head>
+    <body>
+        <div class="scrollWrapper">
+        	<div class="cons">
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+	        	<h1>test scroll</h1>
+        	</div>
+			<div class="footer">
+				<input type="text" id="inputs" placeholder="please input sth">
+			</div>
+        </div>
+    </body>
+    <script>
+    	var inputs = document.getElementById('inputs');
+    	var interval;
+    	inputs.addEventListener('focus', function(e){
+	    	interval = setInterval(function() {
+		    	document.body.scrollTop = document.body.scrollHeight
+			}, 100);
+    	} ,false);
+    	inputs.addEventListener('blur', function(e){
+    		clearInterval(interval);
+    	} ,false);
+    </script>
+</html>
