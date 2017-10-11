@@ -1,0 +1,43 @@
+##javascript的复制、浅拷贝、深拷贝
+1.复制
+  example：
+  ```
+    var obj = {a: 1, b: 2, c: 3, d: {a: 1, b: 2, c: 3}},copyObj;
+  ```
+  copyObj只是复制obj对象的存储地址，当改变obj或者copyObj属性时，它们都将随之而变
+2.浅拷贝
+  example:
+  ```
+    var obj = {a: 1, b: 2, c: 3, d: {a: 1, b: 2, c: 3}},shallowCopyObj;
+    function shallowCopy(obj) {
+      var res = {};
+      for (var val in obj) {
+        if (src.hasOwnProperty(val)) {
+          res[val] = obj[val];
+        }
+      }
+      return res;
+    }
+  ```
+  shallowCopyObj拷贝obj第一层的各个属性值,若obj的属性值为对象，shallowCopyObj只是拷贝的obj改属性值的地址
+2.深拷贝
+  example:
+  ```
+    var obj = {a: 1, b: 2, c: 3, d: {a: 1, b: 2, c: 3}},deepCopyObj;
+    var cloneObj = function(obj){
+      var str, newobj = obj.constructor === Array ? [] : {};
+      if(typeof obj !== 'object'){
+        return;
+      } else if(window.JSON){
+        str = JSON.stringify(obj), //系列化对象
+        newobj = JSON.parse(str); //还原
+      } else {
+        for(var i in obj){
+          newobj[i] = typeof obj[i] === 'object' ? 
+          cloneObj(obj[i]) : obj[i]; 
+        }
+      }
+      return newobj;
+    };
+  ```
+  deepCopyObj克隆obj的所有属性
